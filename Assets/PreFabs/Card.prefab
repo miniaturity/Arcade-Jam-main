@@ -432,12 +432,11 @@ MonoBehaviour:
   m_text: 'Power of The Sea and Storms.
 
 
-    When the enemy is hit, strike them
-    with lightning, <color="red>stunning</color> them for <color=#4287f5>1s</color>.
+    When you successfully <color="orange">parry</color>
+    a projectile, summon a <color="blue">tsunami wave</color> in the opposite direction
+    you were hit.
 
-
-    <color=#4287f5>4s</color>
-    cooldown (when activated)'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a442249933a4704d9525056dc8f790b, type: 2}
   m_sharedMaterial: {fileID: 3052274669316086881, guid: 3a442249933a4704d9525056dc8f790b, type: 2}
