@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
-    public Texture cardCover { get; private set; }
-    public string title { get; private set; }
-    public string desc { get; private set; }
-    public GameObject powerPrefab { get; private set; }
+    public Texture cardCover;
+    public string title;
+    public string desc;
+    public GameObject powerPrefab;
 
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _desc;

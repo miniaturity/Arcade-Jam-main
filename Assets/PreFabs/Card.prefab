@@ -590,6 +590,7 @@ GameObject:
   - component: {fileID: 5120431980483325446}
   - component: {fileID: 1801416941663725195}
   - component: {fileID: 4098735980000811436}
+  - component: {fileID: 1128577156434925669}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -699,3 +700,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1128577156434925669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8104092050013998138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0044b3ff7fd946c4e8f61e4362a36f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardCover: {fileID: 2800000, guid: 90a46035020eb214c9085e1097061911, type: 3}
+  title: Unamed
+  desc: This shouldnt show up.
+  powerPrefab: {fileID: 0}
+  _title: {fileID: 16744106294064954}
+  _desc: {fileID: 9102446629752636300}
+  _coverArt: {fileID: 7680553250804959456}
