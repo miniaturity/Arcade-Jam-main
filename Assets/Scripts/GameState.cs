@@ -29,6 +29,10 @@ public class GameState : MonoBehaviour
     public string actionRB = "Action_RB_";
     public string actionLB = "Action_LB_";
 
+    [SerializeField] private int roundNum = 1; // 1-indexed
+    public int player_1_score = 0, player_2_score = 0;
+    
+
     // Defines the possible operational states of the match flow
     public enum GameStateEnum {
         GetReady,
