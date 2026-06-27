@@ -40,6 +40,11 @@ public class GameState : MonoBehaviour
     // How many round wins are needed to win the whole match
     public int roundsToWinMatch = 5;
     
+    private Card[] allCards =
+    {
+        
+    };
+    public Card[] cards { get; private set; }
 
     // Defines the possible operational states of the match flow
     public enum GameStateEnum {
@@ -51,7 +56,6 @@ public class GameState : MonoBehaviour
     // Current active state of the game session
     public GameStateEnum gameState;
     
-    public GameObject card0, card1, card2;
     
     
     // Start is called before the first frame update

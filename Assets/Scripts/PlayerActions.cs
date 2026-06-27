@@ -37,6 +37,8 @@ public class PlayerActions : MonoBehaviour {
     private bool _canShoot = true;
 
     public GameObject[] powerPrefabs;
+
+    private int selectedCardIndex = 0;
     
     // Start is called before the first frame update
     private void Start()
@@ -150,6 +152,11 @@ public class PlayerActions : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public void SelectCard()
+    {
+        
     }
 
     // Moves this player back to their recorded starting position and clears momentum.
