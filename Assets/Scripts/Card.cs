@@ -1,14 +1,22 @@
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
-public class Card : MonoBehaviour
+public class Card
 {
-    [SerializeField] private Image cardCover;
-    [SerializeField] private string title;
-    [SerializeField] private string desc;
-    [SerializeField] private GameObject powerPrefab;
-    private bool shown = false;
-    private void Start()
+    public Image cardCover { get; private set; }
+    public string title { get; private set; }
+    public string desc { get; private set; }
+    public GameObject powerPrefab { get; private set; }
+    
+    public Card(
+        Image cc,
+        string t,
+        string d,
+        GameObject p
+    )
     {
-        
+        cardCover = cc;
+        title = t;
+        desc = d;
+        powerPrefab = p;
     }
 }

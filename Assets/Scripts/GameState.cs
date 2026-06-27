@@ -15,7 +15,10 @@ public class GameState : MonoBehaviour
     private bool _playerOneReady = false;
     private bool _playerTwoReady = false;
 
-    // Remaining health points for each player
+    // Health each player starts (and restarts) every round with
+    public int startingHealth = 3;
+    
+    // Remaining health points for each player in the current round
     public int playerOneHealth = 3;
     public int playerTwoHealth = 3;
     
@@ -30,7 +33,12 @@ public class GameState : MonoBehaviour
     public string actionLB = "Action_LB_";
 
     [SerializeField] private int roundNum = 1; // 1-indexed
+    
+    // Number of rounds each player has won so far
     public int player_1_score = 0, player_2_score = 0;
+    
+    // How many round wins are needed to win the whole match
+    public int roundsToWinMatch = 5;
     
 
     // Defines the possible operational states of the match flow
@@ -42,6 +50,8 @@ public class GameState : MonoBehaviour
     
     // Current active state of the game session
     public GameStateEnum gameState;
+    
+    public GameObject card0, card1, card2;
     
     
     // Start is called before the first frame update
@@ -62,6 +72,10 @@ public class GameState : MonoBehaviour
         
         // Cache the ReadyView component responsible for user interface updates
         _readyView = gameObject.GetComponent<ReadyView>();
+        
+        // Make sure both players begin round 1 at full health
+        playerOneHealth = startingHealth;
+        playerTwoHealth = startingHealth;
     }
 
     // Update is called once per frame
@@ -78,18 +92,17 @@ public class GameState : MonoBehaviour
                     
                     // Notify the UI to hide lobby options and display game elements
                     _readyView.SetInMatch();
+                    _readyView.UpdateRoundScore(player_1_score, player_2_score);
                 }
                 break;
             }
             
-            // Monitor player health values to determine match termination conditions
+            // Monitor player health values to determine round/match termination conditions
             case GameStateEnum.InMatch: {
                 if (playerOneHealth <= 0 || playerTwoHealth <= 0) {
-                    // Transition to end match state
-                    gameState = GameStateEnum.GameOver;
-                    
-                    // Trigger game over screen, passing the winning player number ("1" or "2")
-                    _readyView.SetInGameOver(playerOneHealth <= 0 ? "2" : "1");
+                    // Whoever still has health left won this round
+                    string roundWinner = playerOneHealth <= 0 ? "2" : "1";
+                    EndRound(roundWinner);
                 }
                 break;
             }
@@ -100,7 +113,45 @@ public class GameState : MonoBehaviour
         }
     }
 
-    // Deducts life from the specified player and updates corresponding UI components
+    // Awards a round to roundWinner, then either ends the match (5 round wins)
+    // or resets health and respawns both players to start the next round
+    private void EndRound(string roundWinner) {
+        if (roundWinner == "1") {
+            player_1_score++;
+        } else {
+            player_2_score++;
+        }
+        
+        roundNum++;
+
+        bool matchWon = player_1_score >= roundsToWinMatch || player_2_score >= roundsToWinMatch;
+
+        if (matchWon) {
+            // Someone has reached 5 round wins - the match is over
+            gameState = GameStateEnum.GameOver;
+            _readyView.SetInGameOver(roundWinner, player_1_score, player_2_score);
+            return;
+        }
+
+        // Not enough round wins yet - reset health and start the next round
+        playerOneHealth = startingHealth;
+        playerTwoHealth = startingHealth;
+        _readyView.UpdatePlayerHealth("1", playerOneHealth);
+        _readyView.UpdatePlayerHealth("2", playerTwoHealth);
+        _readyView.UpdateRoundScore(player_1_score, player_2_score);
+
+        RespawnAllPlayers();
+    }
+
+    // Moves every player back to their recorded starting position/velocity
+    public void RespawnAllPlayers() {
+        foreach (PlayerActions player in FindObjectsOfType<PlayerActions>()) {
+            player.Respawn();
+        }
+    }
+
+    // Deducts life from the specified player, respawns both players, and updates the UI.
+    // Called whenever a player touches a "Death" hazard (e.g. a spike).
     public void TakeDamage(string player) {
         switch (player) {
             case "1": {
@@ -129,6 +180,20 @@ public class GameState : MonoBehaviour
                 _readyView.SetReady(player);
                 break;
             }
+        }
+    }
+
+    public void SetCards(Card[] c)
+    {
+        if (c.Length != 3) {
+            Debug.LogError("attempted to set cards with length not equal to 3.");
+            return;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Card card = c[i];
+
+            
         }
     }
 }

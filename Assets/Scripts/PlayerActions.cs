@@ -35,6 +35,8 @@ public class PlayerActions : MonoBehaviour {
     
     // Flag checking if the weapon is off cooldown and ready to fire
     private bool _canShoot = true;
+
+    public GameObject[] powerPrefabs;
     
     // Start is called before the first frame update
     private void Start()
@@ -141,11 +143,19 @@ public class PlayerActions : MonoBehaviour {
                 
                 // Kill any residual physical movement momentum instantly
                 _rigidbody.velocity = Vector2.zero;
-                
-                // Report the death to the global game state to decrease health/lives
+
+                // Report the death to the global game state. GameState will decrease
+                // this player's health and respawn both players back to their start points.
                 GameState.Instance.TakeDamage(playerCount);
                 break;
             }
         }
+    }
+
+    // Moves this player back to their recorded starting position and clears momentum.
+    // Called by GameState whenever a player needs to be respawned.
+    public void Respawn() {
+        transform.position = _start;
+        _rigidbody.velocity = Vector2.zero;
     }
 }

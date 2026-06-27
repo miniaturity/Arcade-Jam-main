@@ -26,6 +26,11 @@ public class ReadyView : MonoBehaviour {
     // Text element displaying the final winner on the game over screen
     public TextMeshProUGUI playerWins;
     
+    // Optional: shows each player's current round win count during the match.
+    // Safe to leave unassigned in the Inspector - these are null-checked before use.
+    public TextMeshProUGUI roundScorePlayerOne;
+    public TextMeshProUGUI roundScorePlayerTwo;
+    
     // Visual indicator color applied to panels when a player becomes ready
     public Color backgroundColor = Color.green;
     
@@ -60,11 +65,21 @@ public class ReadyView : MonoBehaviour {
         inMatchScreen.SetActive(true);
     }
 
-    // Displays the post-game summary panel and announces the winning player
-    public void SetInGameOver(string player) {
+    // Displays the post-game summary panel and announces the match winner and round score
+    public void SetInGameOver(string player, int player1Wins, int player2Wins) {
         startScreen.SetActive(false);
         gameOverScreen.SetActive(true);
-        playerWins.text = "Player " + player + " wins!";
+        playerWins.text = "Player " + player + " wins the match! (" + player1Wins + " - " + player2Wins + ")";
+    }
+
+    // Refreshes the on-screen round win counters for both players, if assigned
+    public void UpdateRoundScore(int player1Wins, int player2Wins) {
+        if (roundScorePlayerOne != null) {
+            roundScorePlayerOne.text = "Wins: " + player1Wins;
+        }
+        if (roundScorePlayerTwo != null) {
+            roundScorePlayerTwo.text = "Wins: " + player2Wins;
+        }
     }
 
     // Refreshes the on-screen health point value for the specified player
