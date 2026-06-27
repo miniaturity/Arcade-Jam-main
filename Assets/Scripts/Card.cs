@@ -1,22 +1,21 @@
 using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using UnityEngine;
-public class Card
+using UnityEngine.UI;
+public class Card : MonoBehaviour
 {
-    public Image cardCover { get; private set; }
+    public Texture cardCover { get; private set; }
     public string title { get; private set; }
     public string desc { get; private set; }
     public GameObject powerPrefab { get; private set; }
-    
-    public Card(
-        Image cc,
-        string t,
-        string d,
-        GameObject p
-    )
+
+    [SerializeField] private TextMeshProUGUI _title;
+    [SerializeField] private TextMeshProUGUI _desc;
+    [SerializeField] private GameObject _coverArt;
+    private void Awake()
     {
-        cardCover = cc;
-        title = t;
-        desc = d;
-        powerPrefab = p;
+        _title.text = title;
+        _desc.text = desc;
+        _coverArt.GetComponent<RawImage>().texture = cardCover;
     }
 }
